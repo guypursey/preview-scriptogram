@@ -44,6 +44,19 @@ app.use(function (req, res, next) {
 				return (e.match(/^\d{12}/));
 			});
 			context = object_factory();
+			archives.forEach(function(v, i, a) {
+				var current_post = {},
+					post_file = fs.readFileSync("../content/archives/" + v  + "/" + v + ".md", { "encoding": "utf-8" }),
+					tags_file = fs.readFileSync("../content/archives/" + v  + "/" + "tags.txt", { "encoding": "utf-8" });
+
+				current_post["title"] = "Test post";
+				current_post["content"] = marked(post_file);
+				current_post["tags"] = [{ "name": "test" }];
+
+				context.posts.push(current_post);
+			});
+
+			// TODO: sort out synchronicity
 			next();
 		}
 	});
