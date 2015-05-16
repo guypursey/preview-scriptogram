@@ -1,6 +1,9 @@
 var fs = require("fs"),
 	express = require("express"),
 	app = express(),
+	marked = require("marked"),
+	mustache = require("./mustache.js"),
+	template = fs.readFileSync("./themes/basic/main.html", { "encoding": "utf-8" }),
 	archives,
 	drafts,
 	object_factory = function () {
