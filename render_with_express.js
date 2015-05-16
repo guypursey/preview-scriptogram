@@ -29,6 +29,8 @@ var fs = require("fs"),
 			"pagination": ""
 		};
 		return obj;
+	},
+	context;
 
 // By inserting a space in each triplet of braces, this prevents an error with the CSS and Mustache template.
 template = template.replace(/\}\}\}/g, "}} }");
@@ -41,6 +43,7 @@ app.use(function (req, res, next) {
 			archives = files.filter(function (e, i, a) {
 				return (e.match(/^\d{12}/));
 			});
+			context = object_factory();
 			next();
 		}
 	});
@@ -59,10 +62,15 @@ app.use("/draft", function (req, res, next) {
 	});
 });
 
-
 app.get("/", function (req, res, next) {
 	res.writeHead(200, "text/html");
 	res.write(JSON.stringify(archives, null, "\t"));
+	next();
+});
+
+app.use("/preview", function (req, res, next) {
+	res.writeHead(200, "text/html");
+	res.write(mustache.render(template, context));
 	next();
 });
 
