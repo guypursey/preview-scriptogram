@@ -30,10 +30,16 @@ var fs = require("fs"),
 		};
 		return obj;
 	},
+	tripled_variables = ["css", "content", "profile_image"],
 	context;
 
 // By inserting a space in each triplet of braces, this prevents an error with the CSS and Mustache template.
 template = template.replace(/\}\}\}/g, "}} }");
+
+// Because Scriptogram only ever uses double-braced variables, replace these with triple-braced.
+tripled_variables.forEach(function (v, i, a) {
+	template = template.replace(new RegExp("\{\{(" + v + ")\}\}", "g"), "{{{$1}}}");
+});
 
 app.use("/themes", express.static('themes'));
 
