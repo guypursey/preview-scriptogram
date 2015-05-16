@@ -7,14 +7,14 @@ var fs = require("fs"),
 		var obj = {
 			"author": "Guy Pursey",
 			"title": "Coughing & Chopping",
-			"blog_title": "",
+			"blog_title": "A testing blog.",
 			"posts": [],
 			"base_url": "http://scriptogr.am/guypursey",
 			"css": "<link href=\"/themes/basic/style.css\" rel=\"stylesheet\" type=\"text/css\" />",
-			"profile_image": "",
+			"profile_image": "http://www.gravatar.com/avatar/97e4c3c79d57e4e9df2f78aaa5c39361?d=mm&s=128",
 			"cover_image": "",
 			"accent_color": "",
-			"theme": "",
+			"theme": "basic",
 			"pages": [
 				{
 					"permalink": "",
@@ -22,9 +22,7 @@ var fs = require("fs"),
 				}
 			],
 			"page": "",
-			"is_archive": [
-				{}
-			],
+			"is_archive": false,
 			"pagination": ""
 		};
 		return obj;
