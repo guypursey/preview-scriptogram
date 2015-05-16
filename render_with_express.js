@@ -35,6 +35,8 @@ var fs = require("fs"),
 // By inserting a space in each triplet of braces, this prevents an error with the CSS and Mustache template.
 template = template.replace(/\}\}\}/g, "}} }");
 
+app.use("/themes", express.static('themes'));
+
 app.use(function (req, res, next) {
 	fs.readdir("../content/archives/", function (err, files) {
 		if (err) {
