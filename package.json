@@ -1,6 +1,6 @@
 {
   "name": "preview-scriptogram",
-  "description": "A script for viewing Scriptogram",
+  "description": "A simple way to preview your Scriptogram blog offline.",
   "version": "0.0.0",
   "author": "Guy Pursey <guypursey@gmail.com>",
   "dependencies": {
