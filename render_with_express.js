@@ -6,6 +6,15 @@ var fs = require("fs"),
 	template = fs.readFileSync("./themes/basic/main.html", { "encoding": "utf-8" }),
 	archives,
 	drafts,
+	get_config = function () {
+		var config;
+		try {
+			config = fs.readFileSync("config.json", { "encoding": "utf-8" });
+		} catch (e) {
+			console.log("ERROR", "Could not find `config.json`. Please run `setup.js`.")
+		}
+		return config ? JSON.parse(config) : {};
+	},
 	get_context = function () {
 		var context;
 		try {
@@ -16,6 +25,7 @@ var fs = require("fs"),
 		return context ? JSON.parse(context) : {};
 	},
 	tripled_variables = ["css", "content", "profile_image"],
+	config = get_config(),
 	context = get_context();
 
 // By inserting a space in each triplet of braces, this prevents an error with the CSS and Mustache template.
@@ -30,6 +40,8 @@ app.use("/themes", express.static('themes'));
 
 app.use(function (req, res, next) {
 
+	var archive_location = config.archives || "";
+
 	fs.readdir("../content/archives/", function (err, files) {
 		if (err) {
 			res.sendStatus(500); // equivalent to res.status(500).send('Internal Server Error')
@@ -40,8 +52,15 @@ app.use(function (req, res, next) {
 			context = get_context();
 			archives.forEach(function(v, i, a) {
 				var current_post = {},
-					post_file = fs.readFileSync("../content/archives/" + v  + "/" + v + ".md", { "encoding": "utf-8" }),
-					tags_file = fs.readFileSync("../content/archives/" + v  + "/" + "tags.txt", { "encoding": "utf-8" });
+					post_file = "",
+					tags_file = "";
+
+				try {
+					post_file = fs.readFileSync(archive_location + v  + "/" + v + ".md", { "encoding": "utf-8" }),
+					tags_file = fs.readFileSync(archive_location + v  + "/" + "tags.txt", { "encoding": "utf-8" });
+				} catch (e) {
+					console.log("Could not find `" + v + ".md`. May be an issue with the `archives` property in `config.json`.")
+				}
 
 				current_post["title"] = "Test post";
 				current_post["content"] = marked(post_file);
@@ -60,7 +79,7 @@ app.use(function (req, res, next) {
 });
 
 app.use("/draft", function (req, res, next) {
-	fs.readdir("../content/drafts/", function (err, files) {
+	fs.readdir(config.drafts || "", function (err, files) {
 		if (err) {
 			res.sendStatus(500); // equivalent to res.status(500).send('Internal Server Error')
 		} else {

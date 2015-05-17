@@ -25,12 +25,33 @@ fs.readFile("context.json", function (err, data) {
 		};
 
 		// Stringify context object and write to new context file.
-		fs.writeFile("context.json", JSON.stringify(context, null, "\t"));
+		fs.writeFile("context.json", JSON.stringify(context, null, "\t") + "\n");
 
 		console.log("`context.json` now created. Populate with own values to run the preview.");
 
 	} else {
 		console.log("`context.json` already exists. Please delete and run this script again to reinitialise.");
+
+	}
+});
+
+fs.readFile("config.json", function (err, data) {
+	if (err) {
+		// If file does not exist, write the file.
+
+		// Basic config options required.
+		var config = {
+			"archives": "../content/archives/",
+			"drafts": "../content/drafts/"
+		};
+
+		// Stringify context object and write to new context file.
+		fs.writeFile("config.json", JSON.stringify(config, null, "\t") + "\n");
+
+		console.log("`config.json` now created. Please change the values to match your setup.");
+
+	} else {
+		console.log("`config.json` already exists. Please delete and run this script again to reinitialise.");
 
 	}
 });
