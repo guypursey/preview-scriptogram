@@ -6,32 +6,17 @@ var fs = require("fs"),
 	template = fs.readFileSync("./themes/basic/main.html", { "encoding": "utf-8" }),
 	archives,
 	drafts,
-	object_factory = function () {
-		var obj = {
-			"author": "Guy Pursey",
-			"title": "Coughing & Chopping",
-			"blog_title": "A testing blog.",
-			"posts": [],
-			"base_url": "http://scriptogr.am/guypursey",
-			"css": "<link href=\"/themes/basic/style.css\" rel=\"stylesheet\" type=\"text/css\" />",
-			"profile_image": "http://www.gravatar.com/avatar/97e4c3c79d57e4e9df2f78aaa5c39361?d=mm&s=128",
-			"cover_image": "",
-			"accent_color": "",
-			"theme": "basic",
-			"pages": [
-				{
-					"permalink": "",
-					"title": ""
-				}
-			],
-			"page": "",
-			"is_archive": false,
-			"pagination": ""
-		};
-		return obj;
+	get_context = function () {
+		var context;
+		try {
+			context = fs.readFileSync("context.json", { "encoding": "utf-8" });
+		} catch (e) {
+			console.log("ERROR", "Could not find `context.json`. Please run `setup.js`.")
+		}
+		return context ? JSON.parse(context) : {};
 	},
 	tripled_variables = ["css", "content", "profile_image"],
-	context;
+	context = get_context();
 
 // By inserting a space in each triplet of braces, this prevents an error with the CSS and Mustache template.
 template = template.replace(/\}\}\}/g, "}} }");
@@ -44,6 +29,7 @@ tripled_variables.forEach(function (v, i, a) {
 app.use("/themes", express.static('themes'));
 
 app.use(function (req, res, next) {
+
 	fs.readdir("../content/archives/", function (err, files) {
 		if (err) {
 			res.sendStatus(500); // equivalent to res.status(500).send('Internal Server Error')
@@ -51,7 +37,7 @@ app.use(function (req, res, next) {
 			archives = files.filter(function (e, i, a) {
 				return (e.match(/^\d{12}/));
 			});
-			context = object_factory();
+			context = get_context();
 			archives.forEach(function(v, i, a) {
 				var current_post = {},
 					post_file = fs.readFileSync("../content/archives/" + v  + "/" + v + ".md", { "encoding": "utf-8" }),
@@ -61,7 +47,10 @@ app.use(function (req, res, next) {
 				current_post["content"] = marked(post_file);
 				current_post["tags"] = [{ "name": "test" }];
 
-				context.posts.push(current_post);
+				if (context.hasOwnProperty("posts")) {
+					context.posts.push(current_post);
+				}
+
 			});
 
 			// TODO: sort out synchronicity
