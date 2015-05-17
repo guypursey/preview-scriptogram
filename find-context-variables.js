@@ -2,7 +2,7 @@
 
 var fs = require("fs");
 
-fs.readFile("./theme/main.html", { "encoding": "utf-8" }, function (err, data) {
+fs.readFile("./themes/basic/main.html", { "encoding": "utf-8" }, function (err, data) {
 	if (err) return err;
 	var context_array = data.match(/\{\{(.*?)\}\}/g),
 		context_object = {};
