@@ -53,7 +53,8 @@ app.use(function (req, res, next) {
 			archives.forEach(function(v, i, a) {
 				var current_post = {},
 					post_file = "",
-					tags_file = "";
+					tags_file = "",
+					post_title = "";
 
 				try {
 					post_file = fs.readFileSync(archive_location + v  + "/" + v + ".md", { "encoding": "utf-8" }),
@@ -62,8 +63,10 @@ app.use(function (req, res, next) {
 					console.log("Could not find `" + v + ".md`. May be an issue with the `archives` property in `config.json`.")
 				}
 
-				current_post["title"] = "Test post";
-				current_post["content"] = marked(post_file);
+				post_title = post_file.match(/^[\s\n\r\t]*\#[\s\t]*([^\n]*)\n*/) || "";
+				current_post["title"] =  post_title[1] || "";
+				current_post["content"] = marked(post_title[0] ? post_file.replace(post_title[0], "") : "");
+
 				current_post["tags"] = [{ "name": "test" }];
 
 				if (context.hasOwnProperty("posts")) {
