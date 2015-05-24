@@ -3,6 +3,7 @@ var fs = require("fs"),
 	app = express(),
 	marked = require("marked"),
 	mustache = require("mustache"),
+	months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 	archives,
 	drafts,
 	get_config = function () {
@@ -66,6 +67,7 @@ app.use(function (req, res, next) {
 				try {
 					post_file = fs.readFileSync(archive_location + v  + "/" + v + ".md", { "encoding": "utf-8" }),
 					tags_file = fs.readFileSync(archive_location + v  + "/" + "tags.txt", { "encoding": "utf-8" });
+					date_file = fs.readFileSync(archive_location + v + "/" + "date.txt", { "encoding": "utf-8"});
 				} catch (e) {
 					console.log("Could not find `" + v + ".md`. May be an issue with the `archives` property in `config.json`.")
 				}
@@ -79,6 +81,9 @@ app.use(function (req, res, next) {
 					current_post.tags.push({ "name": v });
 				});
 				current_post["if_tags"] = current_post.tags.length;
+
+				current_post["date"] = new Date(date_file.substr(0,4), date_file.substr(5,2) - 1, date_file.substr(8,2), date_file.substr(11,2) + 1, date_file.substr(14,2), 0);
+				current_post["prettydate"] = months[current_post["date"].getMonth()] + " " + (+(date_file.substr(8,2))) + ", " + date_file.substr(0,4);
 
 				if (context.hasOwnProperty("posts")) {
 					context.posts.push(current_post);
