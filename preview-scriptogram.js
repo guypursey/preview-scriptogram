@@ -67,6 +67,7 @@ app.use(function (req, res, next) {
 				current_post["title"] =  post_title[1] || "";
 				current_post["content"] = marked(post_title[0] ? post_file.replace(post_title[0], "") : "");
 
+				current_post["if_tags"] = true;
 				current_post["tags"] = [{ "name": "test" }];
 
 				if (context.hasOwnProperty("posts")) {
