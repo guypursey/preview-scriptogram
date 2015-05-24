@@ -91,6 +91,10 @@ app.use(function (req, res, next) {
 
 			});
 
+			context.posts.sort(function (a, b) {
+				return b.date - a.date;
+			});
+
 			// TODO: sort out synchronicity
 			next();
 		}
