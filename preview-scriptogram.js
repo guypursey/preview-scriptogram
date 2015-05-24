@@ -42,7 +42,7 @@ app.use(function (req, res, next) {
 
 	var archive_location = config.archives || "";
 
-	fs.readdir("../content/archives/", function (err, files) {
+	fs.readdir(archive_location, function (err, files) {
 		if (err) {
 			res.sendStatus(500); // equivalent to res.status(500).send('Internal Server Error')
 		} else {
