@@ -74,11 +74,11 @@ app.use(function (req, res, next) {
 				current_post["title"] =  post_title[1] || "";
 				current_post["content"] = marked(post_title[0] ? post_file.replace(post_title[0], "") : "");
 
-				current_post["if_tags"] = true;
 				current_post["tags"] = [];
 				tags_file.split(/\n/g).forEach(function (v, i, a) {
 					current_post.tags.push({ "name": v });
 				});
+				current_post["if_tags"] = current_post.tags.length;
 
 				if (context.hasOwnProperty("posts")) {
 					context.posts.push(current_post);
