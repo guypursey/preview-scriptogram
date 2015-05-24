@@ -3,7 +3,6 @@ var fs = require("fs"),
 	app = express(),
 	marked = require("marked"),
 	mustache = require("mustache"),
-	template = fs.readFileSync("./themes/basic/main.html", { "encoding": "utf-8" }),
 	archives,
 	drafts,
 	get_config = function () {
@@ -26,7 +25,15 @@ var fs = require("fs"),
 	},
 	tripled_variables = ["css", "content", "profile_image"],
 	config = get_config(),
-	context = get_context();
+	context = get_context(),
+	template = context.theme
+		? fs.readFileSync("./themes/" + context.theme + "/main.html", { "encoding": "utf-8" })
+		: "";
+
+// Alert if template has not been read.
+if (!template) {
+	console.log("Template could not be found. Check theme referenced in `context.json` is valid has corresponding folder and `main.html` under `themes` folder.")
+}
 
 // By inserting a space in each triplet of braces, this prevents an error with the CSS and Mustache template.
 template = template.replace(/\}\}\}/g, "}} }");
