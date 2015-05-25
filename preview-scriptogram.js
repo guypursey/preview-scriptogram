@@ -51,14 +51,8 @@ app.use(function (req, res, next) {
 	var archive_location = config.archives || "";
 
 	fs.readdir(archive_location, function (err, files) {
-		if (err) {
-			res.sendStatus(500); // equivalent to res.status(500).send('Internal Server Error')
-		} else {
-			archives = files.filter(function (e, i, a) {
-				return (e.match(/^\d{12}/));
-			});
-			context = get_context();
-			archives.forEach(function(v, i, a) {
+
+		var ahem_fn = function(v, i, a) {
 				var current_post = {},
 					post_file = "",
 					tags_file = "",
@@ -89,7 +83,16 @@ app.use(function (req, res, next) {
 					context.posts.push(current_post);
 				}
 
+			};
+
+		if (err) {
+			res.sendStatus(500); // equivalent to res.status(500).send('Internal Server Error')
+		} else {
+			archives = files.filter(function (e, i, a) {
+				return (e.match(/^\d{12}/));
 			});
+			context = get_context();
+			archives.forEach(ahem_fn);
 
 			context.posts.sort(function (a, b) {
 				return b.date - a.date;
