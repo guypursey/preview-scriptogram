@@ -103,7 +103,7 @@ app.use(function (req, res, next) {
 					post_title = "";
 
 				console.log("Running Scriptogram preview with `ahem` workflow.");
-				
+
 				try {
 					post_file = fs.readFileSync(archive_location + v + "/" + v + ".md", { "encoding": "utf-8" });
 					tags_file = fs.readFileSync(archive_location + v + "/" + "tags.txt", { "encoding": "utf-8" });
