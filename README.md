@@ -2,7 +2,7 @@
 
 > A simple way to preview your Scriptogram blog offline.
 
-v0.0.1
+v0.0.2
 
 ## Dependencies
 
@@ -19,7 +19,7 @@ v0.0.1
 
  1. Run `npm install` after download to make sure you have all dependencies.
  2. Run `setup.js` with Node to create `config.json` and `context.json` files.
- 3. Ensure that the `archives` and `drafts` properties in `config.json` point to the folders containing your published and unpublished posts respectively.
+ 3. Ensure that the `archives` and `drafts` properties in `config.json` point to the folders containing your published and unpublished posts respectively. If you using `ahem` conventions and workflow, ensure the `ahem` property is set to `true`.
  4. Enter all the values for your blog (your name, the blog's name, etc.) into the `context.json` file.
 
 ## Usage

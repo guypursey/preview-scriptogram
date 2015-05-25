@@ -6,6 +6,10 @@ This project adheres to [Semantic Versioning](http://semver.org/) and the standa
 ### Changed
 - No changes as yet.
 
+## [0.0.2] -- 2015-05-25
+### Added
+ - Property in initialised `config.json` via `setup.js`. This allows users to opt into the [`ahem` workflow conventions].
+
 ## [0.0.1] -- 2015-05-25
 ### Added
  - Date display. Dates now rendered as they are in Scriptogram itself, based on `dates.txt` for each post.
@@ -26,5 +30,6 @@ This project adheres to [Semantic Versioning](http://semver.org/) and the standa
 
 [`ahem` workflow conventions]: https://github.com/guypursey/ahem
 
+[0.0.2]: https://github.com/guypursey/preview-scriptogram/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/guypursey/preview-scriptogram/compare/v0.0.0...v0.0.1
 [Unreleased]: https://github.com/guypursey/preview-scriptogram/compare/v0.0.1...HEAD
