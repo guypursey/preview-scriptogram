@@ -6,6 +6,11 @@ v0.0.0
 
 ## Dependencies
 
+	nodejs
+	npm
+
+### NPM dependencies
+
     "express": "4.12.x",
     "marked": "0.3.x",
     "mustache": "2.0.x"
