@@ -65,8 +65,8 @@ app.use(function (req, res, next) {
 					post_title = "";
 
 				try {
-					post_file = fs.readFileSync(archive_location + v  + "/" + v + ".md", { "encoding": "utf-8" }),
-					tags_file = fs.readFileSync(archive_location + v  + "/" + "tags.txt", { "encoding": "utf-8" });
+					post_file = fs.readFileSync(archive_location + v + "/" + v + ".md", { "encoding": "utf-8" });
+					tags_file = fs.readFileSync(archive_location + v + "/" + "tags.txt", { "encoding": "utf-8" });
 					date_file = fs.readFileSync(archive_location + v + "/" + "date.txt", { "encoding": "utf-8"});
 				} catch (e) {
 					console.log("Could not find `" + v + ".md`. May be an issue with the `archives` property in `config.json`.")
