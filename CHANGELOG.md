@@ -8,7 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and the standa
 
 ## 0.0.0 -- 2015-05-17
 ### Added
- - Basic preview script of files stored in specified locations according to [`ahem` workflow conventions].
+ - Basic preview script of files stored in specified `archives` location according to [`ahem` workflow conventions].
  - Ability to see JSON lists of `archives` and `drafts` files in pretty-printed plain-text.
 
 
