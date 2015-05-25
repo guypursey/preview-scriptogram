@@ -60,6 +60,8 @@ app.use(function (req, res, next) {
 					post_date,
 					post_slug;
 
+				console.log("Running vanilla Scriptogram preview.");
+
 				try {
 					post_file = fs.readFileSync(archive_location + v, { "encoding": "utf-8" });
 				} catch (e) {
@@ -100,6 +102,8 @@ app.use(function (req, res, next) {
 					date_file = "",
 					post_title = "";
 
+				console.log("Running Scriptogram preview with `ahem` workflow.");
+				
 				try {
 					post_file = fs.readFileSync(archive_location + v + "/" + v + ".md", { "encoding": "utf-8" });
 					tags_file = fs.readFileSync(archive_location + v + "/" + "tags.txt", { "encoding": "utf-8" });
@@ -134,7 +138,7 @@ app.use(function (req, res, next) {
 				return (e.match(/^\d{12}/));
 			});
 			context = get_context();
-			archives.forEach(ahem_fn);
+			archives.forEach(config.ahem ? ahem_fn : vanilla_fn);
 
 			context.posts.sort(function (a, b) {
 				return b.date - a.date;

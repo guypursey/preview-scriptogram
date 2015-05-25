@@ -42,7 +42,8 @@ fs.readFile("config.json", function (err, data) {
 		// Basic config options required.
 		var config = {
 			"archives": "../content/archives/",
-			"drafts": "../content/drafts/"
+			"drafts": "../content/drafts/",
+			"ahem": false
 		};
 
 		// Stringify context object and write to new context file.
