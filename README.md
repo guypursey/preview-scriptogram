@@ -2,7 +2,7 @@
 
 > A simple way to preview your Scriptogram blog offline.
 
-v0.0.0
+v0.0.1
 
 ## Dependencies
 
