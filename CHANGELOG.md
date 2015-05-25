@@ -6,6 +6,18 @@ This project adheres to [Semantic Versioning](http://semver.org/) and the standa
 ### Changed
 - No changes as yet.
 
+## [0.0.1] -- 2015-05-25
+### Added
+ - Date display. Dates now rendered as they are in Scriptogram itself, based on `dates.txt` for each post.
+ - Ordering of posts; previews will now show in reverse-chronological order.
+
+### Changed
+ - Title display. Instead of a test title, actual title pulled from first `h1` of main post file.
+ - Tag display. Instead of a test tag, actual tags are now pulled from each post's corresponding `tags.txt` file.
+
+### Fixed
+ - Archive location. This was hard-coded in one place before; now the folder is controlled completely by `config.json`.
+
 ## 0.0.0 -- 2015-05-17
 ### Added
  - Basic preview script of files stored in specified `archives` location according to [`ahem` workflow conventions].
@@ -14,4 +26,5 @@ This project adheres to [Semantic Versioning](http://semver.org/) and the standa
 
 [`ahem` workflow conventions]: https://github.com/guypursey/ahem
 
+[0.0.1]: https://github.com/guypursey/preview-scriptogram/compare/v0.0.0...v0.0.1
 [Unreleased]: https://github.com/guypursey/preview-scriptogram/compare/v0.0.1...HEAD
