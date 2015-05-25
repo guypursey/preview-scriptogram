@@ -97,6 +97,7 @@ app.use(function (req, res, next) {
 				var current_post = {},
 					post_file = "",
 					tags_file = "",
+					date_file = "",
 					post_title = "";
 
 				try {
