@@ -52,7 +52,48 @@ app.use(function (req, res, next) {
 
 	fs.readdir(archive_location, function (err, files) {
 
-		var ahem_fn = function(v, i, a) {
+		var vanilla_fn = function(v, i, a) {
+				var current_post = {},
+					post_file = "",
+					post_title,
+					post_tags,
+					post_date,
+					post_slug;
+
+				try {
+					post_file = fs.readFileSync(archive_location + v, { "encoding": "utf-8" });
+				} catch (e) {
+					console.log("Could not find `" + v + "`. May be an issue with the `archives` property in `config.json`.")
+				}
+
+				post_title = post_file.match(/Title\:[\ \t]*(.*?)[\n\r]/) || "";
+				current_post["title"] =  post_title[1] || "";
+				post_file = post_title[0] ? post_file.replace(post_title[0], "") : post_file;
+
+				current_post["tags"] = [];
+				post_tags = post_file.match(/Tags\:[\ \t]*([^\n\r]*?)[\n\r]/) || ["", ""];
+				post_tags[1].split(/\,/g).forEach(function (v, i, a) {
+					current_post.tags.push({ "name": v });
+				});
+				current_post["if_tags"] = current_post.tags.length;
+				post_file = post_tags[0] ? post_file.replace(post_tags[0], "") : post_file;
+
+				post_date = post_file.match(/Date\:[\ \t]*(.*?)[\n\r]/) || ["", ""];
+				current_post["date"] = new Date(post_date[1].substr(0,4), post_date[1].substr(5,2) - 1, post_date[1].substr(8,2), post_date[1].substr(11,2) + 1, post_date[1].substr(14,2), 0);
+				current_post["prettydate"] = months[current_post["date"].getMonth()] + " " + (+(post_date[1].substr(8,2))) + ", " + post_date[1].substr(0,4);
+				post_file = post_date[0] ? post_file.replace(post_date[0], "") : post_file;
+
+				post_slug = post_file.match(/Slug\:[\ \t]*(.*?)[\n\r]/) || ["", ""];
+				post_file = post_slug[0] ? post_file.replace(post_slug[0], "") : post_file;
+
+				current_post["content"] = marked(post_file);
+
+				if (context.hasOwnProperty("posts")) {
+					context.posts.push(current_post);
+				}
+
+			},
+			ahem_fn = function(v, i, a) {
 				var current_post = {},
 					post_file = "",
 					tags_file = "",
